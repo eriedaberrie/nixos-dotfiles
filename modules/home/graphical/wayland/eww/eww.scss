@@ -1,0 +1,94 @@
+@import "mocha";
+
+button, menubar, menubar > menuitem {
+    all: unset;
+}
+
+.bar-wrap > * {
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.bar-main {
+	font-family: "Jost";
+	font-size: 16px;
+	background-color: $base;
+	color: $text;
+}
+
+.workspaces > button {
+	border-style: solid;
+	border-width: 6px 0 0 0;
+	&:hover {
+		background-color: $surface0;
+	}
+	&.nonexistent {
+		border-color: transparent;
+	}
+	&.existing {
+		border-color: $surface1;
+		&:hover {
+			border-color: $overlay1;
+		}
+	}
+	&.active {
+		border-color: $rosewater;
+	}
+}
+
+.title {
+	font-size: 14px;
+}
+
+.bar-end > * {
+	margin-right: 30px;
+}
+
+.tray > menuitem {
+	margin-right: 15px;
+	& menu {
+		background-color: $mantle;
+	}
+}
+
+@mixin battery-color($property) {
+	#{$property}: $text;
+	.battery-low & {
+		#{$property}: $red;
+	}
+}
+
+.battery-tip {
+	@include battery-color(background-color);
+}
+
+.battery-box {
+	border-style: solid;
+	border-width: 2px;
+	@include battery-color(border-color);
+}
+
+.battery-val {
+	margin: 2px;
+	@include battery-color(background-color);
+	.battery-charging & {
+		background-color: $green;
+	}
+}
+
+.power {
+	font-family: "Jetbrains Mono Nerd Font";
+	font-size: 30px;
+	color: $red;
+	transition: color, background-color 0.15s;
+	&:hover {
+		background-color: $red;
+		color: $base;
+	}
+}
+
+tooltip {
+	color: $text;
+	background-color: rgba($crust, 1);
+	border-radius: 7px;
+}

@@ -1,0 +1,135 @@
+;;; Eww config
+
+(defpoll time
+    :interval "5s"
+    "date '+%l:%M %p'")
+
+(defpoll date
+    :interval "1m"
+    "date '+%D'")
+
+(defpoll acpi
+    :interval "20s"
+    :initial ""
+    "@acpi@ -b")
+
+(deflisten hyprlisten
+    :initial "{
+  \"workspaces\": ${jq(10, `[{active: false, existing: false, id: range(.) + 1}]`)},
+  \"title\": \"\"
+}"
+    "scripts/hyprlisten.rb")
+
+(defwindow bar0
+    :monitor 0
+    :geometry (geometry :height "42px"
+                        :width "100%"
+                        :anchor "top center")
+    :stacking "fg"
+    (bar))
+
+(defwindow bar1
+    :monitor 1
+    :geometry (geometry :height "42px"
+                        :width "100%"
+                        :anchor "top center")
+    :stacking "fg"
+    (bar))
+
+(defwindow bar2
+    :monitor 2
+    :geometry (geometry :height "42px"
+                        :width "100%"
+                        :anchor "top center")
+    :stacking "fg"
+    (bar))
+
+(defwidget bar-wrap []
+  (box :class "bar-wrap"
+       :orientation "h"
+       (bar)))
+
+(defwidget bar []
+  (box :class "bar-main"
+       :orientation "h"
+       (bar-start)
+       (bar-center)
+       (bar-end)))
+
+(defwidget bar-start []
+  (box :class "bar-start"
+       :orientation "h"
+       :halign "start"
+       :space-evenly false
+       (workspaces)))
+
+(defwidget bar-center []
+  (box :class "bar-center"
+       :orientation "h"
+       :halign "center"
+       (title)))
+
+(defwidget bar-end []
+  (box :class "bar-end"
+       :orientation "h"
+       :halign "end"
+       :space-evenly false
+       (tray)
+       (battery)
+       (time)))
+
+(defwidget workspaces []
+  (eventbox
+   :onscroll "@hyprctl@ dispatch workspace e$([ \"{}\" = \"up\" ] && echo '-' || echo '+')1"
+   (box :class "workspaces"
+        :orientation "h"
+        :halign "start"
+        (for workspace in {hyprlisten.workspaces}
+             (button :class "${workspace.active ? 'active' :
+                             (workspace.existing ? 'existing' : 'nonexistent')}"
+                     :width 42
+                     :height 42
+                     :tooltip "Switch to Workspace ${workspace.id}"
+                     :onclick "@hyprctl@ dispatch workspace ${workspace.id}"
+                     {workspace.id})))))
+
+(defwidget title []
+  (label :class "title"
+         :limit-width 77
+         :text {hyprlisten.title}))
+
+(defwidget tray []
+  (systray :class "tray"
+           :pack-direction "rtl"
+           :icon-size 24))
+
+(defwidget battery []
+  (box :class "battery ${EWW_BATTERY.BAT1.status == 'Charging' ? 'battery-charging' :
+(EWW_BATTERY.BAT1.capacity <= 20 ? 'battery-low' : '')}"
+       :orientation "h"
+       :tooltip acpi
+       (box :class "battery-box"
+            :valign "center"
+            :width 28
+            :height 14
+            (box :class "battery-val"
+                 :halign "start"
+                 :width {4 + round (EWW_BATTERY.BAT1.capacity / 5 , 0)}))
+       (box :class "battery-tip"
+            :halign "start"
+            :valign "center"
+            :width 3
+            :height 6)))
+
+(defwidget time []
+  (box :class "time"
+       :tooltip date
+       time))
+
+(defwidget power []
+  (eventbox :class "power"
+            :width 42
+            :cursor "pointer"
+            :onclick "wlogout -p layer-shell &"
+            :tooltip "Logout options"
+            "襤"))

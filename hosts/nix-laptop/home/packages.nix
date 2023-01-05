@@ -1,0 +1,48 @@
+{ pkgs, self, ... }:
+
+{
+  home.packages = with pkgs; [
+    jaq
+    imagemagick
+    ffmpeg
+    gdb
+    self.packages.${system}.ruby
+    self.packages.${system}.python
+    nodejs
+    sbcl
+    racket
+    lispPackages.quicklisp
+    pyright
+    sumneko-lua-language-server
+    clang-tools
+    bear
+    rust-analyzer
+    cmake
+    meson
+    lazygit
+    fortune
+    neo-cowsay
+    lolcat
+    playerctl
+    socat
+    sway
+    imv
+    gimp
+    inkscape
+    xfce.thunar
+    jetbrains.idea-community
+    libqalculate
+    qalculate-gtk
+    libreoffice
+    hunspell
+    hunspellDicts.en-us
+    zoom-us
+    slack
+    remmina
+    qemu
+    wineWowPackages.staging
+    winetricks
+    wireshark
+    ripdrag
+  ];
+}

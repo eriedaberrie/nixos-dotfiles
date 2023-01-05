@@ -1,0 +1,63 @@
+diff --git a/src/flashfetch.c b/src/flashfetch.c
+index 8737c8fc..5c77cab5 100644
+--- a/src/flashfetch.c
++++ b/src/flashfetch.c
+@@ -17,57 +17,7 @@ int main(int argc, char** argv)
+     //Does things like starting detection threads, disabling line wrap, etc
+     ffStart(&instance);
+ 
+-    //Printing
+-    ffPrintTitle(&instance);
+-    ffPrintSeparator(&instance);
+-    ffPrintOS(&instance);
+-    ffPrintHost(&instance);
+-    //ffPrintBios(&instance);
+-    //ffPrintBoard(&instance);
+-    //ffPrintChassis(&instance);
+-    ffPrintKernel(&instance);
+-    ffPrintUptime(&instance);
+-    //ffPrintProcesses(&instance);
+-    ffPrintPackages(&instance);
+-    ffPrintShell(&instance);
+-    ffPrintDisplay(&instance);
+-    // ffPrintBrightness(&instance);
+-    ffPrintDesktopEnvironment(&instance);
+-    ffPrintWM(&instance);
+-    ffPrintWMTheme(&instance);
+-    ffPrintTheme(&instance);
+-    ffPrintIcons(&instance);
+-    ffPrintFont(&instance);
+-    ffPrintCursor(&instance);
+-    ffPrintTerminal(&instance);
+-    ffPrintTerminalFont(&instance);
+-    ffPrintCPU(&instance);
+-    ffPrintGPU(&instance);
+-    ffPrintMemory(&instance);
+-    //ffPrintSwap(&instance);
+-    ffPrintDisk(&instance);
+-    ffPrintBattery(&instance);
+-    ffPrintPowerAdapter(&instance);
+-    //ffPrintPlayer(&instance);
+-    //ffPrintMedia(&instance);
+-    //ffPrintLocalIp(&instance);
+-    //ffPrintPublicIp(&instance);
+-    //ffPrintWifi(&instance);
+-    //ffPrintCPUUsage(&instance);
+-    ffPrintLocale(&instance);
+-    //ffPrintDateTime(&instance);
+-    //ffPrintDate(&instance);
+-    //ffPrintTime(&instance);
+-    //ffPrintVulkan(&instance);
+-    //ffPrintOpenGL(&instance);
+-    //ffPrintOpenCL(&instance);
+-    //ffPrintUsers(&instance);
+-    //ffPrintWeather(&instance);
+-    //ffPrintBluetooth(&instance);
+-    //ffPrintSound(&instance);
+-    //ffPrintGamepad(&instance);
+-    ffPrintBreak(&instance);
+-    ffPrintColors(&instance);
++    @extraFlashfetchConf@
+ 
+     ffFinish(&instance);
+     ffDestroyInstance(&instance);
